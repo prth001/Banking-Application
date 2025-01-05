@@ -10,7 +10,8 @@ import lombok.*;
 //@Getter
 //@AllArgsConstructor
 //@Data
-public class AccountDto {
+//we can also use record class for this
+/*public class AccountDto {
 
     public  AccountDto(Long id, String accountHolderName, double balance) {
         this.id = id;
@@ -49,10 +50,9 @@ public class AccountDto {
     public void setAccountHolderName(String accountHolderName) {
         this.accountHolderName = accountHolderName;
     }
-
-
-
-
-
+}*/
+public record AccountDto(Long id,String accountHolderName,double balance){
+    //the fields are immutable can't be changge
 }
+
 

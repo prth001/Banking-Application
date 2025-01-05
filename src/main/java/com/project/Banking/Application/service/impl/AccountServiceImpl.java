@@ -2,6 +2,7 @@ package com.project.Banking.Application.service.impl;
 
 import com.project.Banking.Application.dto.AccountDto;
 import com.project.Banking.Application.entity.Account;
+import com.project.Banking.Application.exception.accountException;
 import com.project.Banking.Application.mapper.AccountMapper;
 import com.project.Banking.Application.repository.AccountRepository;
 import com.project.Banking.Application.service.AccountService;
@@ -34,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto getAccountById(Long id) {
         Account account=accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new accountException("Account does not exists"));
         return AccountMapper.mapToAccountDto(account);
 
     }
@@ -42,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto deposit(Long id, double amount) {
         Account account=accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new accountException("Account does not exists"));
           double total=  account.getBalance()+amount;
           account.setBalance(total);
           Account savedAccount=accountRepository.save(account);
@@ -53,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto withdraw(Long id, double amount) {
         Account account=accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new accountException("Account does not exists"));
         if(account.getBalance()<amount){
             throw new RuntimeException("Insufficient amount");
         }
@@ -73,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccount(Long id) {
         Account account=accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account does not exists"));
+                .orElseThrow(() -> new accountException("Account does not exists"));
 
         accountRepository.deleteById(id);
 
