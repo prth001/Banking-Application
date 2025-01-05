@@ -8,7 +8,9 @@ import com.project.Banking.Application.service.AccountService;
 import jakarta.persistence.Id;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -63,6 +65,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountDto> getAllAccounts() {
-        return List.of();
+       List<Account>accounts=accountRepository.findAll();
+       return accounts.stream().map((account)-> AccountMapper.mapToAccountDto(account))
+               .collect(Collectors.toList());
     }
 }
